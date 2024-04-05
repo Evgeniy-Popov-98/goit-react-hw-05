@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSearchMovies, getTrendMovies } from "../sevices/API";
+import { getTrendMovies } from "../sevices/API";
 
 export const useListMovies = () => {
   const [topMovies, setTopMovies] = useState([]);

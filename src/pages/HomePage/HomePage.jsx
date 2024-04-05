@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { useListMovies } from "../../hooks/useListMovies";
 
 const HomePage = () => {
@@ -9,11 +10,9 @@ const HomePage = () => {
         {Array.isArray(topMovies) &&
           topMovies.map((item) => {
             return (
-              <ImageCard
-                key={item.id}
-                dataImages={item}
-                openModal={openModal}
-              />
+              <li key={item.id}>
+                <NavLink to="/">{item.title}</NavLink>
+              </li>
             );
           })}
       </ul>
