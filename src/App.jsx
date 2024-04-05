@@ -1,23 +1,28 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 
-const HeaderBox = lazy(() => {
-  "./components/HeaderBox/HeaderBox";
-});
+const HeaderBox = lazy(() => import("./components/HeaderBox/HeaderBox"));
+const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
+const MoviesPage = lazy(() => import("./pages/MoviePage/MoviePage"));
+const NotFoudPage = lazy(() => import("./pages/NotFoudPage/NotFoudPage"));
+
+import { getMovies } from "./sevices/API";
 
 import "./App.css";
 
 function App() {
+  console.log(getMovies("car"));
+
   return (
     <>
       <HeaderBox />
-      <Suspence>
+      {/* <Suspense>
         <Routes>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/movies" element={<MoviesPage />}></Route>
-          <Route path="*" element={<NotFoudPage />}></Route>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movies" element={<MoviesPage />} />
+          <Route path="*" element={<NotFoudPage />} />
         </Routes>
-      </Suspence>
+      </Suspense> */}
     </>
   );
 }
