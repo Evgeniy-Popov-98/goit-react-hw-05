@@ -6,23 +6,19 @@ const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const MoviesPage = lazy(() => import("./pages/MoviePage/MoviePage"));
 const NotFoudPage = lazy(() => import("./pages/NotFoudPage/NotFoudPage"));
 
-import { getMovies } from "./sevices/API";
-
 import "./App.css";
 
 function App() {
-  console.log(getMovies("car"));
-
   return (
     <>
       <HeaderBox />
-      {/* <Suspense>
+      <Suspense>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<MoviesPage />} />
           <Route path="*" element={<NotFoudPage />} />
         </Routes>
-      </Suspense> */}
+      </Suspense>
     </>
   );
 }
