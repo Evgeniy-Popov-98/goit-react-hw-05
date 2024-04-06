@@ -11,7 +11,7 @@ const HomePage = () => {
           topMovies.map((item) => {
             return (
               <li key={item.id}>
-                <NavLink to="/">{item.title}</NavLink>
+                <NavLink to={`/movies/${item.id}`}>{item.title}</NavLink>
               </li>
             );
           })}

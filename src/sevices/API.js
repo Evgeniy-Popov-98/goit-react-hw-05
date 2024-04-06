@@ -23,7 +23,7 @@ export async function getSearchMovies(search) {
 }
 
 export async function getTrendMovies() {
-  const url = `https://api.themoviedb.org/3/movie/popular`;
+  const url = `https://api.themoviedb.org/3/trending/movie/day`;
   const options = {
     headers: {
       Authorization:
@@ -36,5 +36,23 @@ export async function getTrendMovies() {
     throw new Error("Error!");
   } else {
     return res.data.results;
+  }
+}
+
+export async function getDetailsMovies(moviesId) {
+  const url = `https://api.themoviedb.org/3/movie/${moviesId}`;
+  //   const url = `https://api.themoviedb.org/3/search/movie/movie_id`;
+  const options = {
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5Y2MzNzdiMmVjNDQwOGYyYzU2NjIxNWM3ZjQ2M2Q2NiIsInN1YiI6IjY2MGY4YzRhZDQ4Y2VlMDE5ZmJkODVkNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MFJhlmFYG2w0SoscCPSIM0TOJWVvZ_VrYf-QC-eylIc",
+    },
+  };
+
+  const res = await axios.get(url, options);
+  if (res.data.length === 0) {
+    throw new Error("Error!");
+  } else {
+    return res.data;
   }
 }
