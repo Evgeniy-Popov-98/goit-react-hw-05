@@ -1,16 +1,17 @@
 import toast, { Toaster } from "react-hot-toast";
-import { Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import clsx from "clsx";
+
 import { getSearchMovies } from "../../sevices/API";
 
-import clsx from "clsx";
 import style from "./MoviesPage.module.css";
+import Loader from "../../components/Loader/Loader";
 
-const MoviesPage = ({ onSubmit }) => {
+const MoviesPage = () => {
   const [showList, setShowList] = useState("");
   const [arrMovies, setArrMovies] = useState([]);
+  const [showLoader, setShowLoader] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,12 +28,16 @@ const MoviesPage = ({ onSubmit }) => {
 
   useEffect(() => {
     async function getListMovies() {
+      console.log(showList.length);
+      if (showList.length === 0) return;
       try {
+        setShowLoader(true);
         const data = await getSearchMovies(showList);
         setArrMovies(data);
       } catch (error) {
         console.log(error);
       } finally {
+        setShowLoader(false);
       }
     }
     getListMovies();
@@ -40,7 +45,7 @@ const MoviesPage = ({ onSubmit }) => {
 
   return (
     <>
-      <div className={clsx(style.searcgBox)}>
+      <div className={clsx(style.searchBox)}>
         <form className={clsx(style.moviesForm)} onSubmit={handleSubmit}>
           <input
             className={clsx(style.moviesInput)}
@@ -56,25 +61,22 @@ const MoviesPage = ({ onSubmit }) => {
         </form>
         <Toaster position="top-right" reverseOrder={false} />
       </div>
-      {showList.length !== 0 && (
-        <div>
-          <ul>
+      {showLoader ? (
+        <Loader />
+      ) : (
+        <div className={clsx(style.searchContainer)}>
+          <ul className={clsx(style.searchList)}>
             {Array.isArray(arrMovies) &&
               arrMovies.map((item) => {
                 return (
-                  <li key={item.id}>
-                    <NavLink to="/">{item.title}</NavLink>
+                  <li className={clsx(style.searchItem)} key={item.id}>
+                    <NavLink to={`${item.id}`}>{item.title}</NavLink>
                   </li>
                 );
               })}
           </ul>
         </div>
       )}
-      {/* <Suspense>
-        <Routes>
-          <Route path="comments" />
-        </Routes>
-      </Suspense> */}
     </>
   );
 };

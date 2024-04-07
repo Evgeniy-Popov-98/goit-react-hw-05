@@ -66,12 +66,11 @@ export async function getMovieCast(moviesId) {
   };
 
   const res = await axios.get(url, options);
-  console.log(res);
-  //   if (res.data.length === 0) {
-  //     throw new Error("Error!");
-  //   } else {
-  //     return res.data;
-  //   }
+  if (res.data.length === 0) {
+    throw new Error("Error!");
+  } else {
+    return res.data;
+  }
 }
 
 export async function getMovieReviews(moviesId) {
@@ -84,10 +83,9 @@ export async function getMovieReviews(moviesId) {
   };
 
   const res = await axios.get(url, options);
-  console.log(res);
-  //   if (res.data.length === 0) {
-  //     throw new Error("Error!");
-  //   } else {
-  //     return res.data;
-  //   }
+  if (res.data.length === 0) {
+    throw new Error("Error!");
+  } else {
+    return res.data;
+  }
 }

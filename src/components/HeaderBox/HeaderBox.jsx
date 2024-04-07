@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-
 import clsx from "clsx";
+
 import style from "./HeaderBox.module.css";
 
 const HeaderBox = () => {

@@ -1,5 +1,5 @@
-import { Suspense, lazy, useEffect, useState } from "react";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 import clsx from "clsx";
 
@@ -12,8 +12,10 @@ import { getDetailsMovies } from "../../sevices/API";
 import style from "./MovieDetailsPage.module.css";
 
 const MovieDetailsPage = () => {
-  const { moviesId } = useParams();
   const [itemCardMovie, setItemCardMovie] = useState([]);
+  const { moviesId } = useParams();
+  const location = useLocation();
+  const backLinkRef = useRef(location.state ?? "/");
 
   useEffect(() => {
     async function getItemMovies() {
@@ -30,13 +32,11 @@ const MovieDetailsPage = () => {
     getItemMovies();
   }, [moviesId]);
 
-  console.log(itemCardMovie);
-
   return (
     <div className={clsx(style.details)}>
-      <button className={clsx(style.detailsButton)} type="button">
-        ⬅ Go back
-      </button>
+      <Link className={clsx(style.detailsButton)} to={backLinkRef.current}>
+        ⬅ Go Back
+      </Link>
       <div className={clsx(style.detailsBox)}>
         <img
           src={`https://image.tmdb.org/t/p/w500/${itemCardMovie.backdrop_path}`}
@@ -61,23 +61,23 @@ const MovieDetailsPage = () => {
           </ul>
         </div>
       </div>
-      <div>
-        <h3>Additional information</h3>
-        <ul>
-          <li>
+      <div className={clsx(style.boxAdditional)}>
+        <h3>Additional information:</h3>
+        <ul className={clsx(style.additionalList)}>
+          <li className={clsx(style.additionalItem)}>
             <Link to="cast">Cast</Link>
           </li>
-          <li>
+          <li className={clsx(style.additionalItem)}>
             <Link to="reviews">Reviews</Link>
           </li>
         </ul>
-        <Suspense>
-          <Routes>
-            <Route path="cast" element={<MovieCast />} />
-            <Route path="reviews" element={<MovieReviews />} />
-          </Routes>
-        </Suspense>
       </div>
+      <Suspense>
+        <Routes>
+          <Route path="cast" element={<MovieCast />} />
+          <Route path="reviews" element={<MovieReviews />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 };
