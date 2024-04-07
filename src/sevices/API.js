@@ -41,7 +41,6 @@ export async function getTrendMovies() {
 
 export async function getDetailsMovies(moviesId) {
   const url = `https://api.themoviedb.org/3/movie/${moviesId}`;
-  //   const url = `https://api.themoviedb.org/3/search/movie/movie_id`;
   const options = {
     headers: {
       Authorization:
@@ -55,4 +54,40 @@ export async function getDetailsMovies(moviesId) {
   } else {
     return res.data;
   }
+}
+
+export async function getMovieCast(moviesId) {
+  const url = `https://api.themoviedb.org/3/movie/${moviesId}/credits`;
+  const options = {
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5Y2MzNzdiMmVjNDQwOGYyYzU2NjIxNWM3ZjQ2M2Q2NiIsInN1YiI6IjY2MGY4YzRhZDQ4Y2VlMDE5ZmJkODVkNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MFJhlmFYG2w0SoscCPSIM0TOJWVvZ_VrYf-QC-eylIc",
+    },
+  };
+
+  const res = await axios.get(url, options);
+  console.log(res);
+  //   if (res.data.length === 0) {
+  //     throw new Error("Error!");
+  //   } else {
+  //     return res.data;
+  //   }
+}
+
+export async function getMovieReviews(moviesId) {
+  const url = `https://api.themoviedb.org/3/movie/${moviesId}/reviews`;
+  const options = {
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5Y2MzNzdiMmVjNDQwOGYyYzU2NjIxNWM3ZjQ2M2Q2NiIsInN1YiI6IjY2MGY4YzRhZDQ4Y2VlMDE5ZmJkODVkNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MFJhlmFYG2w0SoscCPSIM0TOJWVvZ_VrYf-QC-eylIc",
+    },
+  };
+
+  const res = await axios.get(url, options);
+  console.log(res);
+  //   if (res.data.length === 0) {
+  //     throw new Error("Error!");
+  //   } else {
+  //     return res.data;
+  //   }
 }

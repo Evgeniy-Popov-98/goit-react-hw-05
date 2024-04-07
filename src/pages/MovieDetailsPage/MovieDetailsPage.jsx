@@ -1,6 +1,12 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Suspense, lazy, useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import clsx from "clsx";
+
+const MovieCast = lazy(() => import("../../MovieCast/MovieCast"));
+const MovieReviews = lazy(() =>
+  import("../../components/MovieReviews/MovieReviews")
+);
 
 import { getDetailsMovies } from "../../sevices/API";
 import style from "./MovieDetailsPage.module.css";
@@ -23,22 +29,31 @@ const MovieDetailsPage = () => {
 
     getItemMovies();
   }, [moviesId]);
+
   console.log(itemCardMovie);
+
   return (
-    <div>
-      <button type="button">⬅ Go back</button>
-      <div>
+    <div className={clsx(style.details)}>
+      <button className={clsx(style.detailsButton)} type="button">
+        ⬅ Go back
+      </button>
+      <div className={clsx(style.detailsBox)}>
         <img
           src={`https://image.tmdb.org/t/p/w500/${itemCardMovie.backdrop_path}`}
           alt=""
         />
         <div>
           <h2>{itemCardMovie.original_title}</h2>
-          <p>{itemCardMovie.popularity}</p>
+          <p>
+            User Score:{" "}
+            {itemCardMovie.length !== 0 &&
+              itemCardMovie.vote_average.toFixed(2)}
+            %
+          </p>
           <h3>Overview</h3>
           <p>{itemCardMovie.overview}</p>
           <p>Genres</p>
-          <ul>
+          <ul className={clsx(style.genresList)}>
             {Array.isArray(itemCardMovie.genres) &&
               itemCardMovie.genres.map((item) => {
                 return <li key={item.id}>{item.name}</li>;
@@ -49,9 +64,19 @@ const MovieDetailsPage = () => {
       <div>
         <h3>Additional information</h3>
         <ul>
-          <li></li>
-          <li></li>
+          <li>
+            <NavLink to={`/movies/${moviesId}/credits`}>Cast</NavLink>
+          </li>
+          <li>
+            <NavLink to={`/movies/${moviesId}/reviews`}>Reviews</NavLink>
+          </li>
         </ul>
+        <Suspense>
+          <Routes>
+            <Route path="/credits" element={<MovieCast />} />
+            <Route path="/reviews" element={<MovieReviews />} />
+          </Routes>
+        </Suspense>
       </div>
     </div>
   );
