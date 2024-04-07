@@ -1,9 +1,9 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 import clsx from "clsx";
 
-const MovieCast = lazy(() => import("../../MovieCast/MovieCast"));
+const MovieCast = lazy(() => import("../../components/MovieCast/MovieCast"));
 const MovieReviews = lazy(() =>
   import("../../components/MovieReviews/MovieReviews")
 );
@@ -65,16 +65,16 @@ const MovieDetailsPage = () => {
         <h3>Additional information</h3>
         <ul>
           <li>
-            <NavLink to={`/movies/${moviesId}/credits`}>Cast</NavLink>
+            <Link to="cast">Cast</Link>
           </li>
           <li>
-            <NavLink to={`/movies/${moviesId}/reviews`}>Reviews</NavLink>
+            <Link to="reviews">Reviews</Link>
           </li>
         </ul>
         <Suspense>
           <Routes>
-            <Route path="/credits" element={<MovieCast />} />
-            <Route path="/reviews" element={<MovieReviews />} />
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReviews />} />
           </Routes>
         </Suspense>
       </div>

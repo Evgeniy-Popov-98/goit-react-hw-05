@@ -7,7 +7,7 @@ const MoviesPage = lazy(() => import("./pages/MoviesPage/MoviesPage"));
 const MovieDetailsPage = lazy(() =>
   import("./pages/MovieDetailsPage/MovieDetailsPage")
 );
-const NotFoudPage = lazy(() => import("./pages/NotFoudPage/NotFoudPage"));
+// const NotFoudPage = lazy(() => import("./pages/NotFoudPage/NotFoudPage"));
 
 import "./App.css";
 
@@ -19,8 +19,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<MoviesPage />} />
-          <Route path="/movies/:moviesId" element={<MovieDetailsPage />} />
-          <Route path="*" element={<NotFoudPage />} />
+          <Route path="/movies/:moviesId/*" element={<MovieDetailsPage />} />
+          {/* <Route path="*" element={<NotFoudPage />} /> */}
         </Routes>
       </Suspense>
     </>
