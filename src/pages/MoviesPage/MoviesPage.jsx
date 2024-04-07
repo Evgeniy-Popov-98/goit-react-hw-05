@@ -7,11 +7,13 @@ import { getSearchMovies } from "../../sevices/API";
 
 import style from "./MoviesPage.module.css";
 import Loader from "../../components/Loader/Loader";
+import ErrorMessege from "../../components/ErrorMessege/ErrorMessege";
 
 const MoviesPage = () => {
   const [showList, setShowList] = useState("");
   const [arrMovies, setArrMovies] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,14 +30,14 @@ const MoviesPage = () => {
 
   useEffect(() => {
     async function getListMovies() {
-      console.log(showList.length);
       if (showList.length === 0) return;
       try {
+        setShowError(false);
         setShowLoader(true);
         const data = await getSearchMovies(showList);
         setArrMovies(data);
       } catch (error) {
-        console.log(error);
+        setShowError(true);
       } finally {
         setShowLoader(false);
       }
@@ -61,8 +63,9 @@ const MoviesPage = () => {
         </form>
         <Toaster position="top-right" reverseOrder={false} />
       </div>
-      {showLoader ? (
-        <Loader />
+      {showLoader && <Loader />}
+      {showError ? (
+        <ErrorMessege />
       ) : (
         <div className={clsx(style.searchContainer)}>
           <ul className={clsx(style.searchList)}>
